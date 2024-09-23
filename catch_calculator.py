@@ -57,7 +57,7 @@ CPM = {
 
 
 
-# maps the throw multiplier to each throw leve; note that each throw type gives a 
+# maps the throw multiplier to each throw level note that each throw type gives a 
 # range of multipliers, so an average for each type of throw is used:
 THROW = {
         'NONE'  : 1,
