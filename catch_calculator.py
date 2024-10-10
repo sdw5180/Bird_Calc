@@ -34,7 +34,7 @@ import math
 
 
 # GLOBALS
-BASE_RATE   = 0.003                     # 0.3% for the galarian legendary trio
+BASE_RATE   = 0.003                         # 0.3% for the galarian legendary trio
 
 BERRY       = 2.5                           # Razzberry
 CURVE       = 1.7                           # Curveball
@@ -42,7 +42,7 @@ ENCOUNTER   = 1                             # Wild Encounter
 MEDAL       = 1.4                           # Platinum Medal(s)
 BALL        = 2                             # Ultra Ball
 
-SUCCESS_PERC = 0.99                     # Desired success chance after N throws
+SUCCESS_PERC = 0.99                         # Desired success chance after N throws
 P_MIN_SUCCESS_PERC = 1 - SUCCESS_PERC       # 1 - p(catch after n throws)
 
 
@@ -102,6 +102,7 @@ def calc_catch(CPM):
     catch_great =    1 - (pow(catch_p, modifier_great))
     catch_excelent = 1 - (pow(catch_p, modifier_excelent))
 
+    # return all four probabilities by catch type:
     return catch_none, catch_nice, catch_great, catch_excelent
 
 
@@ -115,6 +116,7 @@ def calc_avg(p_none, p_nice, p_great, p_excelent):
         1 = p * n
         n = 1/p
     """
+    # return all four average throws by catch type:
     return 1/p_none, 1/p_nice, 1/p_great, 1/p_excelent
 
 
@@ -166,8 +168,8 @@ def main():
     the rate for Excelent, Great, Nice, and regular throws at several levels. Use of
     Ulra Balls and Golden Raspberry is assumed for all throws.
     """
-    #pokemon = input("Enter choice?"                    # < - for future aditions, 
-    #                 + "\n * A - G!Articuno"           # uncomment to allow modification
+    #pokemon = input("Enter choice?"                                    # < - for future aditions, 
+    #                 + "\n * A - G!Articuno"                           # uncomment to allow modification
     #                 + "\n * M - G!Moltres"
     #                 + "\n * Z - G!Zapdos\n")
     # If the input isn't in the list of avalable pokemon:
@@ -183,9 +185,9 @@ def main():
     
     # Column headers:
     print("\t\tNONE\t\t\tNICE\t\t\tGREAT\t\t\tEXCELENT\t\tFor a " + str(round(SUCCESS_PERC * 100)) + "%" + " catch chance:\n" +
-          "\t    __________________________________________________________________________________________________________________________________________________________________")
+          "\t    ___________________________________________________________________________________________________________________________________________")
 
-    # For each level, calculate and print the catch rate, average throws, and tot. num for 99 success rate:
+    # For each level, calculate and print the catch rate, average throws, and tot. num for 99% success rate:
     levels = ['1', '10', '20', '30']
     for level in levels:
         if (level == '1'):
@@ -199,18 +201,18 @@ def main():
         # Caculate the average number of throws for a success with NONE, NICE, GREAT, and EXCELENT throws:
         avg_none, avg_nice, avg_great, avg_excelent = calc_avg(catch_none, catch_nice, catch_great, catch_excelent)
 
-        # Calculate the number of throws to acheive aSUCCESS_PERC % chance of a catch:
+        # Calculate the number of throws to acheive a SUCCESS_PERC % chance of a catch:
         e_throws = calc_throws(catch_excelent)
         n_throws = calc_throws(catch_none)
         
-        #print("\t __%__\t\t __%__\t\t __%__\t\t __%__")
         # Output data in a table:
+        # row format:    \t __%__\t\t __%__\t\t __%__\t\t __%__\t\t __ EXCELENT throws | __ NORMAL throws
         print("\t" +  round_catch(catch_none)       + " | " + round_avg(avg_none) +
               "\t\t" + round_catch(catch_nice)      + " | " + round_avg(avg_nice) +
               "\t\t"+ round_catch(catch_great)      + " | " + round_avg(avg_great) +
               "\t\t" + round_catch(catch_excelent)  + " | " + round_avg(avg_excelent) +
               "\t\t" +
-              str(round(e_throws)) + " EXCELENT throws / " + 
+              str(round(e_throws)) + " EXCELENT throws | " + 
               str(round(n_throws)) + " NORMAL throws")
     
 
